@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include <fstream>
-#include <string>
 
 int main()
 {
@@ -8,18 +7,21 @@ int main()
     std::string path;
     std::cin >> path;
     
-    std::fstream file;
-    file.open(path);
+    std::ifstream file;
+    file.open(path, std::ios::binary);
     if (file.is_open())
     {
-        std::string temp;
+        char temp[2];
         while (!file.eof())
         {
-            std::getline(file, temp);
-            std::cout << temp << std::endl;
+            file.read(temp, sizeof(temp) - 1);
+            temp[1] = 0;
+            std::cout << temp;
         }
         file.close();
     }
     else
         std::cout << "File not found" << std::endl;
+
+    std::cout << std::endl;
 }
