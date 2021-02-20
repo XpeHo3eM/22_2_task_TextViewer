@@ -12,9 +12,8 @@ int main()
     if (file.is_open())
     {
         char temp[2];
-        while (!file.eof())
+        while (file.read(temp, sizeof(temp) - 1))
         {
-            file.read(temp, sizeof(temp) - 1);
             temp[1] = 0;
             std::cout << temp;
         }
