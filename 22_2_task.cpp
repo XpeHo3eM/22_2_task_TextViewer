@@ -11,12 +11,23 @@ int main()
     file.open(path, std::ios::binary);
     if (file.is_open())
     {
-        char temp[2];
-        while (file.read(temp, sizeof(temp) - 1))
+        char temp[11];
+        int sizeForRead = sizeof(temp) - 1;
+        file.seekg(0, std::ios::end);
+        int sizeLeft = file.tellg();
+        file.seekg(0, std::ios::beg);
+
+        while (sizeLeft > sizeForRead)
         {
-            temp[1] = 0;
+            file.read(temp, sizeForRead);
+            temp[sizeForRead] = 0;
             std::cout << temp;
+            sizeLeft -= sizeForRead;
         }
+        file.read(temp, sizeLeft);
+        temp[sizeLeft] = 0;
+        std::cout << temp;
+
         file.close();
     }
     else
